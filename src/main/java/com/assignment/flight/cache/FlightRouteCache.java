@@ -129,4 +129,8 @@ public class FlightRouteCache {
         String key = startLocation + "-" + endLocation;
         return flightRouteMap.get( key ) != null;
     }
+
+    public HashMap<String, List<String>> getFlightRouteMap() {
+        return flightRouteMap;
+    }
 }
