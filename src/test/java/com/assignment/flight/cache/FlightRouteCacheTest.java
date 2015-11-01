@@ -24,8 +24,8 @@ public class FlightRouteCacheTest {
         Assert.assertTrue( possibleRoutes.size() == 2 );
         Assert.assertTrue( possibleRoutes.get( 0 ).size() == 1 );
         Assert.assertTrue( possibleRoutes.get( 1 ).size() == 2 );
-        Assert.assertEquals( possibleRoutes.get( 0 ).get( 0 ), "d" );
-        Assert.assertEquals( possibleRoutes.get( 1 ).get( 0 ), "c" );
-        Assert.assertEquals( possibleRoutes.get( 1 ).get( 1 ), "e" );
+        Assert.assertEquals( possibleRoutes.get( 0 ).get( 0 ), "c-e" );
+        Assert.assertEquals( possibleRoutes.get( 1 ).get( 0 ), "c-d" );
+        Assert.assertEquals( possibleRoutes.get( 1 ).get( 1 ), "d-e" );
     }
 }

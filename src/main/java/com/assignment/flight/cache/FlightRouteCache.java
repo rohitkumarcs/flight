@@ -18,7 +18,6 @@ public class FlightRouteCache {
     private static String PROP_CONNECTIONS = "com.assignment.connecting.to.";
     private static String PROP_ROUTE_FLIGHTS = "com.assignment.route.";
     public HashMap<Integer, String> locationMap = new HashMap(  );
-    public HashMap<String, List<String>> connectionMap = new HashMap(  );
     public HashMap<String, List<String> > flightRouteMap = new HashMap(  );
     public List<String> locationList = new ArrayList(  );
 
@@ -44,25 +43,32 @@ public class FlightRouteCache {
         List<List<String>> connectedRoutesList =  new ArrayList(  );
         String key = startLocation + "-" + endLocation;
         if( flightRouteMap.get( key ) != null) {
-            connectedRoutesList.add( new ArrayList(Arrays.asList(startLocation, endLocation)) );
+            connectedRoutesList.add( new ArrayList(Arrays.asList(startLocation + "-" + endLocation)) );
         }
 
         for(List<String> connectingLocations : routesList) {
             boolean isConnected = true;
+            List<String> routes = new ArrayList(  );
             for ( int i =0; i < connectingLocations.size(); i++){
+                String route;
                 if( connectingLocations.size() != 1 && connectingLocations.size() - 1 != i) {
                     isConnected = isConnected( connectingLocations.get( i ), connectingLocations.get( i + 1 ) );
+                    routes.add(connectingLocations.get( i ) + "-" + connectingLocations.get( i + 1 ));
                 } else if( connectingLocations.size() == 1) {
                     isConnected = isConnected( startLocation, connectingLocations.get( i ) ) &&
                         isConnected( connectingLocations.get( i ), endLocation );
+                    routes.add(startLocation + "-" + connectingLocations.get( i ));
+                    routes.add(connectingLocations.get( i ) + "-" + endLocation);
                 } else if( connectingLocations.size() - 1 == i) {
                     isConnected = isConnected( connectingLocations.get( i ), endLocation );
+                    routes.add(connectingLocations.get( i ) + "-" + endLocation);
                 }
-                if( !isConnected )
+                if( !isConnected ){
                     break;
+                }
             }
             if(isConnected){
-                connectedRoutesList.add( connectingLocations );
+                connectedRoutesList.add( routes );
             }
         }
 
@@ -94,14 +100,12 @@ public class FlightRouteCache {
 
     private void getConnectedTo( Properties properties){
         int index = 1;
-        String locations = null;
+        String locations;
         do{
             locations = (String) properties.get( PROP_CONNECTIONS + index);
             if(locations != null){
                 List<String> locationList = Arrays.asList( locations.split( "," ) );
                 String startLocation = locationMap.get( index );
-                connectionMap.put( startLocation, locationList );
-
                 for(String endLocation : locationList){
                     int routeInx = 1;
                     String flight;
