@@ -35,6 +35,50 @@ public class FlightRouteCache {
         getConnectedTo( properties );
     }
 
+    public List<List<String>> getLinkedRouteList( String startLocation, String endLocation){
+        locationList.remove( startLocation );
+        locationList.remove( endLocation );
+        PossibleRoutePermutation perm = new PossibleRoutePermutation();
+
+        List<List<String>> routesList =  perm.getRoutsBetweenLocations( locationList );
+        List<List<String>> connectedRoutesList =  new ArrayList(  );
+        String key = startLocation + "-" + endLocation;
+        if( flightRouteMap.get( key ) != null) {
+            connectedRoutesList.add( new ArrayList(Arrays.asList(startLocation, endLocation)) );
+        }
+
+        for(List<String> connectingLocations : routesList) {
+            boolean isConnected = true;
+            for ( int i =0; i < connectingLocations.size(); i++){
+                if( connectingLocations.size() != 1 && connectingLocations.size() - 1 != i) {
+                    isConnected = isConnected( connectingLocations.get( i ), connectingLocations.get( i + 1 ) );
+                } else if( connectingLocations.size() == 1) {
+                    isConnected = isConnected( startLocation, connectingLocations.get( i ) ) &&
+                        isConnected( connectingLocations.get( i ), endLocation );
+                } else if( connectingLocations.size() - 1 == i) {
+                    isConnected = isConnected( connectingLocations.get( i ), endLocation );
+                }
+                if( !isConnected )
+                    break;
+            }
+            if(isConnected){
+                connectedRoutesList.add( connectingLocations );
+            }
+        }
+
+        Collections.sort(connectedRoutesList, new Comparator<List<String>>( ) {
+
+            @Override
+            public int compare(List<String> i1, List<String> i2) {
+                return (i2.size() < i1.size()) ? 1 : -1;
+            }
+        });
+
+        System.out.println( connectedRoutesList );
+
+        return connectedRoutesList;
+    }
+
     private void getLocations( Properties properties){
         int index = 1;
         String location;
@@ -75,50 +119,6 @@ public class FlightRouteCache {
             }
             index++;
         } while ( locations != null );
-    }
-
-    public List<List<String>> getLinkedRouteList( String startLocation, String endLocation){
-        locationList.remove( startLocation );
-        locationList.remove( endLocation );
-        PossibleRoutePermutation perm = new PossibleRoutePermutation();
-
-        List<List<String>> routesList =  perm.getRoutsBetweenLocations( locationList );
-        List<List<String>> connectedRoutesList =  new ArrayList(  );
-        String key = startLocation + "-" + endLocation;
-        if( flightRouteMap.get( key ) != null) {
-            connectedRoutesList.add( new ArrayList(Arrays.asList(startLocation, endLocation)) );
-        }
-
-        for(List<String> connectingLocations : routesList) {
-            boolean isConnected = true;
-            for ( int i =0; i < connectingLocations.size(); i++){
-                if( connectingLocations.size() != 1 && connectingLocations.size() - 1 != i) {
-                    isConnected = isConnected( connectingLocations.get( i ), connectingLocations.get( i + 1 ) );
-                } else if( connectingLocations.size() == 1) {
-                    isConnected = isConnected( startLocation, connectingLocations.get( i ) ) &&
-                        isConnected( connectingLocations.get( i ), endLocation );
-                } else if( connectingLocations.size() - 1 == i) {
-                    isConnected = isConnected( connectingLocations.get( i ), endLocation );
-                }
-                if( !isConnected )
-                break;
-            }
-            if(isConnected){
-                connectedRoutesList.add( connectingLocations );
-            }
-        }
-
-        Collections.sort(connectedRoutesList, new Comparator<List<String>>( ) {
-
-            @Override
-            public int compare(List<String> i1, List<String> i2) {
-                return (i2.size() < i1.size()) ? 1 : -1;
-            }
-        });
-
-        System.out.println( connectedRoutesList );
-
-        return connectedRoutesList;
     }
 
     private boolean isConnected( String startLocation, String endLocation ) {

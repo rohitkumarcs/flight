@@ -43,9 +43,4 @@ public class PossibleRoutePermutation {
 
         return combinations;
     }
-
-//    public static void main(String args[]) {
-//        ArrayList testList = new ArrayList(Arrays.asList("a", "b", "c"));;
-//        System.out.println(getRoutsBetweenLocations( testList ));
-//    }
 }
