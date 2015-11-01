@@ -1,10 +1,9 @@
 package com.assignment.flight;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class Permutation {
+public class PossibleRoutePermutation {
 
     public List<List<String>> getRoutsBetweenLocations(List<String> locationList) {
 

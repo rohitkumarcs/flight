@@ -1,6 +1,6 @@
 package com.assignment.flight.cache;
 
-import com.assignment.flight.Permutation;
+import com.assignment.flight.PossibleRoutePermutation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,7 +80,7 @@ public class FlightRouteCache {
     public List<List<String>> getLinkedRouteList( String startLocation, String endLocation){
         locationList.remove( startLocation );
         locationList.remove( endLocation );
-        Permutation perm = new Permutation();
+        PossibleRoutePermutation perm = new PossibleRoutePermutation();
 
         List<List<String>> routesList =  perm.getRoutsBetweenLocations( locationList );
         List<List<String>> connectedRoutesList =  new ArrayList(  );
