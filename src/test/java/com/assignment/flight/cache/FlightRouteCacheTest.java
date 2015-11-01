@@ -19,7 +19,6 @@ public class FlightRouteCacheTest {
 
     @Test
     public void testFlightRoute(){
-        Assert.assertTrue( true );
         List<List<String>> possibleRoutes = flightRouteCache.getLinkedRouteList( "c", "e" );
         Assert.assertTrue( possibleRoutes.size() == 2 );
         Assert.assertTrue( possibleRoutes.get( 0 ).size() == 1 );
