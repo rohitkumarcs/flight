@@ -1,6 +1,4 @@
-package com.assignment.flight;
-
-import com.assignment.flight.model.FlightPerRoute;
+package com.assignment.flight.data;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.assignment.flight.cache;
 
-import com.assignment.flight.StartToEndRouteDetails;
+import com.assignment.flight.data.StartToEndRouteDetails;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

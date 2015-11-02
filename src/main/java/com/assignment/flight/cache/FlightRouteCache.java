@@ -1,8 +1,8 @@
 package com.assignment.flight.cache;
 
 import com.assignment.flight.PossibleRoutePermutation;
-import com.assignment.flight.model.FlightPerRoute;
-import com.assignment.flight.StartToEndRouteDetails;
+import com.assignment.flight.data.FlightPerRoute;
+import com.assignment.flight.data.StartToEndRouteDetails;
 
 import java.io.IOException;
 import java.io.InputStream;
